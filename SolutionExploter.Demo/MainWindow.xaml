@@ -1,0 +1,55 @@
+﻿<Window x:Class="SolutionExploter.Demo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:avalon="http://schemas.xceed.com/wpf/xaml/avalondock"
+        Title="MainWindow" Height="700" Width="1000" WindowStartupLocation="CenterScreen">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="New">
+                    <MenuItem Header="Project" Command="{Binding NewProjectCmd}"/>
+                </MenuItem>
+                <MenuItem Header="Open">
+                    <MenuItem Header="Project" Command="{Binding OpenProjectCmd}"/>
+                </MenuItem>
+                <MenuItem Header="Add">
+                    <MenuItem Header="New Project" Command="{Binding AddNewProjectCmd}"/>
+                    <MenuItem Header="Existing Project" Command="{Binding AddExistingProjectCmd}"/>
+                </MenuItem>
+                <MenuItem Header="Close Solution" Command="{Binding CloseSolutionCmd}"/>
+            </MenuItem>
+            <MenuItem Header="Build">
+                <MenuItem Header="Build Solution" Command="{Binding BuildSolutionCmd}"/>
+                <MenuItem Header="Rebuild Solution" Command="{Binding RebuildSolutionCmd}"/>
+                <Separator></Separator>
+                <MenuItem Header="Build Active Project" Command="{Binding BuildActiveProjectCmd}"/>
+                <MenuItem Header="Rebuild Active Project" Command="{Binding RebuildActiveProjectCmd}"/>
+                <Separator></Separator>
+                <MenuItem Header="Build Stop" Command="{Binding BuildStopCmd}" />
+                <!--<Separator></Separator>
+                <MenuItem Header="Build Active CPU" Command="{Binding BuildActiveCpuCmd}"/>
+                <MenuItem Header="Rebuild Active CPU" Command="{Binding RebuildActiveCpuCmd}"/>-->
+            </MenuItem>
+        </Menu>
+        <avalon:DockingManager
+            Margin="5">
+            <avalon:LayoutRoot x:Name="Root">
+                <avalon:LayoutPanel Orientation="Horizontal">
+                    <avalon:LayoutAnchorablePane>
+                        
+                    </avalon:LayoutAnchorablePane>
+                    <avalon:LayoutDocumentPane>
+                        
+                    </avalon:LayoutDocumentPane>
+                    <avalon:LayoutAnchorablePane
+                        DockWidth="250">
+                        <avalon:LayoutAnchorable
+                            Title="Solution Explorer" ContentId="SolutionExplorer">
+                            <ContentControl Content="{Binding SolutionExplorer}"/>
+                        </avalon:LayoutAnchorable>
+                    </avalon:LayoutAnchorablePane>
+                </avalon:LayoutPanel>
+            </avalon:LayoutRoot>
+        </avalon:DockingManager>
+    </DockPanel>
+</Window>

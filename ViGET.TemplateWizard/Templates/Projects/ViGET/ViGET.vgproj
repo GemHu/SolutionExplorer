@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project EncyptCode="" createDate="2018-03-05" author="HXXX" lastModifyDate="2018-04-28" type="DPS3000B">
+  <GlobalVariable filePath="" />
+  <CPUs>
+    <CPU name="CPU1">
+      <Settings hwType="CPU1010" hasShmVars="True">
+        <Connection tcpPort="52332" tcpIp="192.168.0.21" />
+      </Settings>
+
+      <!--Task define demo-->
+      <Tasks cyclic="3" interrupt="2">
+        <!--cyclic task define demo-->
+        <Task name="T1" type="cyclic" priority="1" fileNumber="1">
+          <File exectionOrder="1" fileName="cfcFile1" />
+        </Task>
+        <Task name="T2" type="cyclic" priority="2" fileNumber="0" />
+        <Task name="T3" type="cyclic" priority="3" fileNumber="0" />
+
+        <!--interrupt task define demo-->
+        <Task name="I1" type="interrupt" priority="1" fileNumber="0" />
+        <Task name="I2" type="interrupt" priority="2" fileNumber="0" />
+      </Tasks>
+
+      <Files fileNumber="1">
+        <File fileType="CFC" filePath="CPU1\cfcFile1.cfc" link="True" />
+      </Files>
+    </CPU>
+    
+    <CPU name="CPU2" >
+      <Settings hwType="CPU1010" hasShmVars="True">
+        <Connection tcpPort="52332" tcpIp="192.168.0.21" />
+      </Settings>
+
+      <!--Task define demo-->
+      <Tasks cyclic="3" interrupt="2">
+        <!--cyclic task define demo-->
+        <Task name="T1" type="cyclic" priority="1" fileNumber="1">
+          <File exectionOrder="1" fileName="cfcFile2" />
+        </Task>
+        <Task name="T2" type="cyclic" priority="2" fileNumber="0" />
+        <Task name="T3" type="cyclic" priority="3" fileNumber="0" />
+
+        <!--interrupt task define demo-->
+        <Task name="I1" type="interrupt" priority="1" fileNumber="0" />
+        <Task name="I2" type="interrupt" priority="2" fileNumber="0" />
+      </Tasks>
+      
+      <Files fileNumber="1">
+        <File fileType="CFC" filePath="CPU2\cfcFile2.cfc" link="True" />
+      </Files>
+    </CPU>
+  </CPUs>
+</Project>

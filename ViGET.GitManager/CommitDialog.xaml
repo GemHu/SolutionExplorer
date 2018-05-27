@@ -1,0 +1,80 @@
+﻿<Window x:Class="DothanTech.ViGET.GitManager.CommitDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:DothanTech.ViGET.GitManager"
+        Title="CommitDialog" Height="500" Width="700" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="btnStyle" TargetType="Button">
+            <Setter Property="Width" Value="80"></Setter>
+            <Setter Property="Height" Value="25"></Setter>
+            <Setter Property="Margin" Value="0, 0, 10, 10"></Setter>
+        </Style>
+        <Style x:Key="imgStyle" TargetType="Image">
+            <Setter Property="Width" Value="16"/>
+            <Setter Property="Height" Value="16"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="3,0"/>
+        </Style>
+    </Window.Resources>
+    <DockPanel>
+        <StackPanel
+            DockPanel.Dock="Bottom"
+            Orientation="Horizontal" HorizontalAlignment="Right"
+            Height="auto">
+            <Button Content="Commit" Style="{StaticResource btnStyle}" Command="{Binding CommitCmd}"/>
+            <Button Content="Cancel" Style="{StaticResource btnStyle}" Command="{Binding CancelCmd}"/>
+        </StackPanel>
+        <GroupBox
+            DockPanel.Dock="Top" Height="130" Header="Messages" Margin="10" Padding="5">
+            <TextBox Text="{Binding CommitMessage}" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" FontSize="15"/>
+        </GroupBox>
+        <GroupBox 
+            Header="Changes mode" Margin="10" Padding="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <ListView Grid.Row="0" ItemsSource="{Binding PathStatusItems}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Path" Width="400">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <CheckBox IsChecked="{Binding IsSelected}" />
+                                            <Image Source="{Binding Image}" Style="{StaticResource imgStyle}" />
+                                            <TextBlock Text="{Binding Path}" Foreground="{Binding Model, Converter={x:Static local:FileManagerViewModel.Model2ColorConverter}}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Extension" Width="70">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Extension}" Foreground="{Binding Model, Converter={x:Static local:FileManagerViewModel.Model2ColorConverter}}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Status" Width="60">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Status}" Foreground="{Binding Model, Converter={x:Static local:FileManagerViewModel.Model2ColorConverter}}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <!--<GridViewColumn Header="Add"></GridViewColumn>
+                        <GridViewColumn Header="Del"></GridViewColumn>-->
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <CheckBox Grid.Row="1" IsChecked="{Binding IsSelectAll}" Content="Select/Deselect" Margin="0, 5"/>
+            </Grid>
+        </GroupBox>
+    </DockPanel>
+</Window>

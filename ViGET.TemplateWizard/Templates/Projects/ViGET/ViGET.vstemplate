@@ -1,0 +1,31 @@
+<VSTemplate Version="2.0.0" Type="Project">
+  <TemplateData>
+    <!--项目模板名称-->
+    <Name>ViGET V2.0 Project</Name>
+    <!--项目模板描述-->
+    <Description>Create a new ViGET V2.0 project</Description>
+    <!--项目类型-->
+    <Type>DPS3000B</Type>
+    <!--在项目模板中显示的书序，越小越靠前显示-->
+    <SortOrder>1000</SortOrder>
+    <!--添加项目时显示的默认项目名称，如果默认名称已经存在，则按默认名称递增显示-->
+    <DefaultName>ViGET</DefaultName>
+    <!--模板中显示的图标-->
+    <Icon>ViGET.ico</Icon>
+  </TemplateData>
+
+  <TemplateContent>
+    <Project File="ViGET.vgproj" TargetFileName="$safeprojectname$.vgstation" ReplaceParameters="true">
+      <ProjectItem
+        TargetFileName="CPU1\cfcFile1.cfc"
+        ReplaceParameters="false">
+        CFC1.CFC
+      </ProjectItem>
+      <ProjectItem
+        TargetFileName="CPU2\cfcFile2.cfc"
+        ReplaceParameters="false">
+        CFC1.CFC
+      </ProjectItem>
+    </Project>
+  </TemplateContent>
+</VSTemplate>

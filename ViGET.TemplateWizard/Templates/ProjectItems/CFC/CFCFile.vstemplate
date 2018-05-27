@@ -1,0 +1,19 @@
+<VSTemplate Version="2.0.0" Type="Item">
+  <TemplateData>
+    <!--模板名称-->
+    <Name>CFC Program</Name>
+    <!--模板类型, 对应于CFC文件类型-->
+    <Type>CFC</Type>
+    <Description>CFC文件</Description>
+    <Icon>CFC.ico</Icon>
+    <SortOrder>110</SortOrder>
+    <DefaultName>CfcFile.cfc</DefaultName>
+    <!--改模板所属类型，只有类型匹配的时候才可以加载改模板-->
+    <Category>
+      <OwnerType>CPU1010</OwnerType>
+    </Category>
+  </TemplateData>
+  <TemplateContent>
+    <Project File="CFCFile.CFC" TargetFileName="$safeprojectname$.cfc" ReplaceParameters="true"></Project>
+  </TemplateContent>
+</VSTemplate>

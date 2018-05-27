@@ -1,0 +1,17 @@
+<VSTemplate Version="2.0.0" Type="Item">
+  <TemplateData>
+    <Name>EPU10A</Name>
+    <!--模板类型，对应于CPU的硬件类型-->
+    <Type>CPU1010</Type>
+    <Description>CPU module of current station.</Description>
+    <Icon>mak.ico</Icon>
+    <SortOrder>100</SortOrder>
+    <DefaultName>CPU</DefaultName>
+    <Category>
+      <OwnerType>DPS3000B</OwnerType>
+    </Category>
+  </TemplateData>
+  <TemplateContent>
+    <Project></Project>
+  </TemplateContent>
+</VSTemplate>

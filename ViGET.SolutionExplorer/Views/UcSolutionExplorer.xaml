@@ -1,0 +1,233 @@
+﻿<UserControl x:Class="DothanTech.ViGET.SolutionExplorer.UcSolutionExplorer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:DothanTech.ViGET.SolutionExplorer"
+             xmlns:viCmds="clr-namespace:DothanTech.ViGET.ViCommand;assembly=ViGET.ViCommand"
+             xmlns:data="clr-namespace:DothanTech.ViGET.Manager;assembly=ViGET.ProjectManager" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.CommandBindings>
+        <!--<CommandBinding Command="{x:Static ApplicationCommands.Copy}" CanExecute="CanExecuteCommand" Executed="ExecutedCommand" />-->
+    </UserControl.CommandBindings>
+    <UserControl.Resources>
+        <local:IsActiveStyleConverter x:Key="isActiveConverter"/>
+        
+        <Style x:Key="style_treeViewItem_icon" TargetType="Image">
+            <Setter Property="Width" Value="16"></Setter>
+            <Setter Property="Height" Value="16"></Setter>
+            <Setter Property="Margin" Value="5,0,0,0"></Setter>
+        </Style>
+        <Style x:Key="style_treeViewItem_text" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="Margin" Value="3,0,0,0"></Setter>
+        </Style>
+        <Style x:Key="style_toolbar_icon" TargetType="Image">
+            <Setter Property="Width" Value="16"></Setter>
+            <Setter Property="Height" Value="16"></Setter>
+            <Setter Property="Margin" Value="2, 0"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        </Style>
+        <Style x:Key="style_treeViewItem_panel" TargetType="StackPanel">
+            <Setter Property="Height" Value="20"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="Orientation" Value="Horizontal"></Setter>
+        </Style>
+
+        <!--<Style x:Key="style_toolbar_border" TargetType="Border">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FDF4BF"></Setter>
+                </Trigger>
+                <EventTrigger RoutedEvent="Click">
+                    <setter Property="Background" Value="#FDF4BF"></setter>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>-->
+        
+        <DataTemplate x:Key="displayTemplate">
+            <TextBlock Text="{Binding Path=Name}"></TextBlock>
+        </DataTemplate>
+        <DataTemplate x:Key="editTemplate">
+            <TextBox Text="{Binding Path=Name, Mode=OneWay}" Tag="{Binding .}" LostFocus="TextBox_LostFocus" KeyUp="TextBox_KeyUp"></TextBox>
+        </DataTemplate>
+        
+        <!--<local:ProjectIconConverter x:Key="converterProjectIcon" />-->
+        <HierarchicalDataTemplate DataType="{x:Type data:ViFileNode}">
+            <StackPanel Style="{StaticResource style_treeViewItem_panel}">
+                <Image x:Name="FileIcon" Style="{StaticResource style_treeViewItem_icon}" Source="pack://application:,,,/ViGET.SolutionExplorer;Component/Images/ICON_CFC_LINKED.png"/>
+                <local:EditableTextBlock IsEditMode="{Binding IsEditMode}" Content="{Binding .}">
+                    <local:EditableTextBlock.Style>
+                        <Style TargetType="local:EditableTextBlock">
+                            <Style.Triggers >
+                                <Trigger Property="IsEditMode" Value="True">
+                                    <Setter Property="ContentTemplate" Value="{StaticResource editTemplate}"></Setter>
+                                </Trigger>
+                                <Trigger Property="IsEditMode" Value="False">
+                                    <Setter Property="ContentTemplate" Value="{StaticResource displayTemplate}"></Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </local:EditableTextBlock.Style>
+                </local:EditableTextBlock>
+                <StackPanel.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Link" Command="{x:Static viCmds:ViCommands.Link}" CommandParameter="{Binding .}"/>
+                        <MenuItem Header="Unlink" Command="{x:Static viCmds:ViCommands.Unlink}" CommandParameter="{Binding .}"/>
+                        <Separator></Separator>
+                        <MenuItem Header="Cut" Command="{x:Static ApplicationCommands.Cut}" CommandParameter="{Binding .}" />
+                        <MenuItem Header="Copy" Command="{x:Static ApplicationCommands.Copy}" CommandParameter="{Binding .}" />
+                        <MenuItem Header="Delete" Command="{x:Static ApplicationCommands.Delete}" CommandParameter="{Binding .}"/>
+                        <MenuItem Header="Rename" Command="{x:Static viCmds:ViCommands.Rename}" CommandParameter="{Binding .}" />
+                    </ContextMenu>
+                </StackPanel.ContextMenu>
+            </StackPanel>
+            <HierarchicalDataTemplate.Triggers>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding Linked}" Value="True"/>
+                        <Condition Binding="{Binding IsCutting}" Value="True"/>
+                    </MultiDataTrigger.Conditions>
+                    <Setter TargetName="FileIcon" Property="Source" Value="pack://application:,,,/ViGET.SolutionExplorer;Component/Images/ICON_CFC_CUTTING.png" />
+                </MultiDataTrigger>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding Linked}" Value="True"/>
+                        <Condition Binding="{Binding IsCutting}" Value="False"/>
+                    </MultiDataTrigger.Conditions>
+                    <Setter TargetName="FileIcon" Property="Source" Value="pack://application:,,,/ViGET.SolutionExplorer;Component/Images/ICON_CFC_LINKED.png"/>
+                </MultiDataTrigger>
+                <!--<DataTrigger Binding="{Binding Linked}" Value="True">
+                    <Setter TargetName="FileIcon" Property="Source" Value="pack://application:,,,/ViGET.SolutionExplorer;Component/Images/ICON_CFC_LINKED.png"/>
+                </DataTrigger>-->
+                <DataTrigger Binding="{Binding Linked}" Value="False">
+                    <Setter TargetName="FileIcon" Property="Source" Value="pack://application:,,,/ViGET.SolutionExplorer;Component/Images/ICON_CFC_UNLINKED.png"/>
+                </DataTrigger>
+            </HierarchicalDataTemplate.Triggers>
+        </HierarchicalDataTemplate>
+        <HierarchicalDataTemplate DataType="{x:Type data:ViFolderInfo}" ItemsSource="{Binding Children, Mode=OneWay}">
+            <StackPanel Style="{StaticResource style_treeViewItem_panel}">
+                <Image x:Name="nodeIcon" Style="{StaticResource style_treeViewItem_icon}" Source="pack://application:,,,/ViGET.SolutionExplorer;Component/Images/NODE_FOLDER.png"/>
+                <TextBlock Text="{Binding Path=Name}" Style="{StaticResource style_treeViewItem_text}"></TextBlock>
+            </StackPanel>
+            <HierarchicalDataTemplate.Triggers>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type TreeViewItem}},Path=IsExpanded}"  Value="True"/>
+                    </MultiDataTrigger.Conditions>
+                    <MultiDataTrigger.Setters>
+                        <Setter TargetName="nodeIcon" Property="Source" Value="pack://application:,,,/ViGET.SolutionExplorer;Component/Images/NODE_FOLDER_OPEN.png" />
+                    </MultiDataTrigger.Setters>
+                </MultiDataTrigger>
+            </HierarchicalDataTemplate.Triggers>
+        </HierarchicalDataTemplate>
+        <HierarchicalDataTemplate DataType="{x:Type data:SolutionManager}" ItemsSource="{Binding Children}">
+            <StackPanel Style="{StaticResource style_treeViewItem_panel}">
+                <Image Style="{StaticResource style_treeViewItem_icon}" Source="pack://application:,,,/ViGET.SolutionExplorer;Component/Images/NODE_SOLUTION.png"/>
+                <TextBlock Text="{Binding Path=ShownName}" Style="{StaticResource style_treeViewItem_text}"></TextBlock>
+                <StackPanel.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Build Solution" Command="{x:Static viCmds:ViCommands.Build}" CommandParameter="{Binding .}"/>
+                        <MenuItem Header="Rebuild Solution" Command="{x:Static viCmds:ViCommands.Rebuild}" CommandParameter="{Binding .}"/>
+                        <MenuItem Header="Clean Solution" Command="{x:Static viCmds:ViCommands.Clean}" CommandParameter="{Binding .}"/>
+                        <Separator/>
+                        <MenuItem Header="Add">
+                            <MenuItem Header="New Project..." Command="{x:Static viCmds:ViCommands.AddNewProject}" />
+                            <MenuItem Header="Existing Project..." Command="{x:Static viCmds:ViCommands.AddExistingProject}" />
+                        </MenuItem>
+                        <Separator></Separator>
+                        <MenuItem Header="Create Git Repository" Command="{x:Static viCmds:ViCommands.GitCreate}" CommandParameter="{Binding .}"/>
+                        <MenuItem Header="Commit" Command="{x:Static viCmds:ViCommands.GitCommit}" CommandParameter="{Binding .}"/>
+                        <MenuItem Header="Diff" Command="{x:Static viCmds:ViCommands.GitDiff}" CommandParameter="{Binding .}"/>
+                        <MenuItem Header="Show Log" Command="{x:Static viCmds:ViCommands.GitShowLog}" CommandParameter="{Binding .}"/>
+                        <Separator></Separator>
+                        <MenuItem Header="Open Folder in File Explorer" Command="{x:Static viCmds:ViCommands.OpenLocalFolder}" CommandParameter="{Binding .}"/>
+                    </ContextMenu>
+                </StackPanel.ContextMenu>
+            </StackPanel>
+        </HierarchicalDataTemplate>
+        <HierarchicalDataTemplate DataType="{x:Type data:ProjectManager}" ItemsSource="{Binding Children}">
+            <StackPanel Style="{StaticResource style_treeViewItem_panel}">
+                <Image Style="{StaticResource style_treeViewItem_icon}" Source="pack://application:,,,/ViGET.SolutionExplorer;Component/Images/NODE_12.png"/>
+                <TextBlock 
+                    Text="{Binding Path=Name}" Style="{StaticResource style_treeViewItem_text}" />
+                <StackPanel.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Build" Command="{x:Static viCmds:ViCommands.Build}" CommandParameter="{Binding .}"/>
+                        <MenuItem Header="Rebuild" Command="{x:Static viCmds:ViCommands.Rebuild}" CommandParameter="{Binding .}"/>
+                        <MenuItem Header="Clean" Command="{x:Static viCmds:ViCommands.Clean}" CommandParameter="{Binding .}"/>
+                        <Separator/>
+                        <MenuItem Header="Add">
+                            <MenuItem Header="New Item..." Command="{x:Static viCmds:ViCommands.AddNewItem}" CommandParameter="{Binding .}"/>
+                            <MenuItem Header="Existing Item..." Command="{x:Static viCmds:ViCommands.AddExistingItem}" />
+                        </MenuItem>
+                        <Separator></Separator>
+                        <MenuItem Header="Diff" Command="{x:Static viCmds:ViCommands.GitDiff}" CommandParameter="{Binding .}"/>
+                        <Separator></Separator>
+                        <MenuItem Header="Remove" Command="{x:Static ApplicationCommands.Delete}" CommandParameter="{Binding .}"/>
+                        <MenuItem Header="Open Folder" Command="{x:Static viCmds:ViCommands.OpenLocalFolder}" CommandParameter="{Binding .}"/>
+                    </ContextMenu>
+                </StackPanel.ContextMenu>
+            </StackPanel>
+        </HierarchicalDataTemplate>
+        <HierarchicalDataTemplate DataType="{x:Type data:ViCPUInfo}" ItemsSource="{Binding Children}">
+            <StackPanel Style="{StaticResource style_treeViewItem_panel}">
+                <StackPanel.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Build" Command="{x:Static viCmds:ViCommands.Build}" CommandParameter="{Binding .}"/>
+                        <MenuItem Header="Rebuild" Command="{x:Static viCmds:ViCommands.Rebuild}" CommandParameter="{Binding .}"/>
+                        <MenuItem Header="Clean" Command="{x:Static viCmds:ViCommands.Clean}" CommandParameter="{Binding .}"/>
+                        <Separator/>
+                        <MenuItem Header="Add">
+                            <MenuItem Header="New Item..." Command="{x:Static viCmds:ViCommands.AddNewItem}" CommandParameter="{Binding .}"/>
+                            <MenuItem Header="Existing Item..." Command="{x:Static viCmds:ViCommands.AddExistingItem}" CommandParameter="{Binding .}"/>
+                        </MenuItem>
+                        <Separator></Separator>
+                        <MenuItem Header="IsActive" Command="{x:Static viCmds:ViCommands.IsActive}" CommandParameter="{Binding .}"/>
+                        <Separator/>
+                        <MenuItem Header="Open Folder" Command="{x:Static viCmds:ViCommands.OpenLocalFolder}" CommandParameter="{Binding .}"/>
+                    </ContextMenu>
+                </StackPanel.ContextMenu>
+                <Image Style="{StaticResource style_treeViewItem_icon}" Source="pack://application:,,,/ViGET.SolutionExplorer;Component/Images/NODE_04.png"/>
+                <TextBlock 
+                    Text="{Binding Path=Name}" 
+                    Style="{StaticResource style_treeViewItem_text}"
+                    FontWeight="{Binding IsActive, Converter={StaticResource isActiveConverter}}"/>
+            </StackPanel>
+        </HierarchicalDataTemplate>
+        <Style x:Key="style_treeViewItem_container" TargetType="{x:Type TreeViewItem}">
+            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"></Setter>
+            <Setter Property="ContextMenu" Value="{Binding ContextMenu}"></Setter>
+            <Setter Property="IsSelected"  Value="{Binding IsSelected}"></Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>      <!--工具栏-->
+            <RowDefinition Height="*"></RowDefinition>         <!--treeview-->
+        </Grid.RowDefinitions>
+        <!--工具栏-->
+        <StackPanel Grid.Row="0" Orientation="Vertical" Background="#CFD6E5">
+            <StackPanel Orientation="Horizontal" Height="28" Background="White" Visibility="Collapsed"></StackPanel>      <!--工具条-->
+            <Border BorderBrush="#E5C365" BorderThickness="1" Margin="0, 2" Background="White" Visibility="Collapsed">    <!--搜索框-->
+                <Grid Height="21">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" BorderBrush="LightBlue"></TextBox>
+                    <Border Grid.Column="1">
+                        <Image Style="{StaticResource style_toolbar_icon}"
+                               Source="pack://application:,,,/ViGET.SolutionExplorer;Component/Images/ICON_SEARCH.png"></Image>
+                    </Border>
+                </Grid>
+            </Border>
+        </StackPanel>
+        <!--TreeView-->
+        <TreeView Grid.Row="1" x:Name="treeProjects" ItemsSource="{Binding Children}"
+                  BorderThickness="0" AllowDrop="True"
+                  ItemContainerStyle="{StaticResource style_treeViewItem_container}">
+        </TreeView>
+    </Grid>
+</UserControl>

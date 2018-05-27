@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7EBC8D60-FFD9-482B-8080-E2651E2EF41F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DothanTech.ViGET.SolutionExplorer</RootNamespace>
+    <AssemblyName>ViGET.SolutionExplorer</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ProjectFactory.Build.cs" />
+    <Compile Include="ProjectFactory.cs" />
+    <Compile Include="ProjectFactory.Event.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\EditableTextBlock.cs" />
+    <Compile Include="Views\UcSolutionExplorer.Mouse.cs" />
+    <Compile Include="Views\UcSolutionExplorer.xaml.cs">
+      <DependentUpon>UcSolutionExplorer.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DothanTech.Helpers\DothanTech.Helpers.csproj">
+      <Project>{15056d6d-f78d-4325-bb8d-3e506efaba95}</Project>
+      <Name>DothanTech.Helpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ViGET.ProjectManager\ViGET.ProjectManager.csproj">
+      <Project>{e4b4bf8f-718c-4adc-8bd7-45eb73ea426a}</Project>
+      <Name>ViGET.ProjectManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ViGET.ViCommand\ViGET.ViCommand.csproj">
+      <Project>{1f112913-0e4f-49ed-8c22-3038109e9c4e}</Project>
+      <Name>ViGET.ViCommand</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ViGET.ViService\ViGET.ViService.csproj">
+      <Project>{fc317f53-7ae7-4c4c-b57a-d39ac8489dbe}</Project>
+      <Name>ViGET.ViService</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\UcSolutionExplorer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ICON_CFC_LINKED.png" />
+    <Resource Include="Images\NODE_02.png" />
+    <Resource Include="Images\NODE_03.png" />
+    <Resource Include="Images\NODE_04.png" />
+    <Resource Include="Images\NODE_05.png" />
+    <Resource Include="Images\NODE_06.png" />
+    <Resource Include="Images\NODE_07.png" />
+    <Resource Include="Images\NODE_08.png" />
+    <Resource Include="Images\NODE_09.png" />
+    <Resource Include="Images\NODE_10.png" />
+    <Resource Include="Images\NODE_11.png" />
+    <Resource Include="Images\NODE_12.png" />
+    <Resource Include="Images\NODE_13.png" />
+    <Resource Include="Images\NODE_14.png" />
+    <Resource Include="Images\NODE_15.png" />
+    <Resource Include="Images\NODE_16.png" />
+    <Resource Include="Images\NODE_17.png" />
+    <Resource Include="Images\NODE_18.png" />
+    <Resource Include="Images\NODE_19.png" />
+    <Resource Include="Images\NODE_20.png" />
+    <Resource Include="Images\NODE_21.png" />
+    <Resource Include="Images\NODE_FOLDER.png" />
+    <Resource Include="Images\NODE_FOLDER_OPEN.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\NODE_SOLUTION.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ICON_SEARCH.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Views\UcSolutionExplorer.Command.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\btnClose.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\BuildAllCPUs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\CPU.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Deselect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Project.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\RebuildAllCPUs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\SelectAll.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ICON_CFC_UNLINKED.png" />
+    <Resource Include="Images\ICON_CFC_CUTTING.png" />
+    <Content Include="ReleaseNotes.css" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
